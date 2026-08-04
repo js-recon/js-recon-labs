@@ -1,5 +1,7 @@
 # JS Recon Labs
 
+[![Plumber Score](https://score.getplumber.io/github.com/js-recon/js-recon-labs.svg)](https://score.getplumber.io/github.com/js-recon/js-recon-labs)
+
 ![JS Recon labs banner](./static/labs-banner.png)
 
 This repository contains labs for [JS Recon](https://github.com/js-recon/js-recon). The apps in this repository have vulnerabilities to demonstrate the tool's capabilities.
