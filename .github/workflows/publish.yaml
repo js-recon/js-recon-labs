@@ -33,7 +33,7 @@ jobs:
 
       - name: Build and push Docker images
         run: |
-          for top in next_js detection; do
+          for top in next_js detection nuxt angular vite; do
             if [ ! -d "$top" ]; then
               echo "'$top' directory not found."
               exit 1

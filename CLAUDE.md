@@ -14,6 +14,17 @@ next_js/
   dom-xss-postMessage/       # Next.js App Router — postMessage → innerHTML XSS
   dom-xss-postMessage-jsUrl/ # Next.js App Router — postMessage → location.href
   vuln-all-rules/            # Next.js App Router — seeds ALL js-recon-rules (CI smoke-test target)
+  cve-2025-29927/            # Next.js middleware bypass CVE (CI smoke-test target)
+  cve-2026-64645/            # Next.js rewrites() SSRF CVE (CI smoke-test target)
+  cve-2025-55182/            # React Flight deserializer RCE CVE, "React2Shell" (CI smoke-test target)
+vite/
+  cve-2025-30208/            # Vite server.fs.deny bypass CVE (CI smoke-test target)
+  cve-2026-39363/            # Vite WebSocket fetchModule bypass CVE (CI smoke-test target)
+nuxt/
+  cve-2026-71320/            # Nuxt Server Island RCE CVE (CI smoke-test target)
+  cve-2026-71315/            # Nuxt route-rule casing bypass CVE, also covers CVE-2026-53721 (CI smoke-test target)
+angular/
+  cve-2026-68945/            # Angular HttpTransferCache key-collision CVE (CI smoke-test target)
 detection/
   next_js/                   # Next.js (own bundler), port 3010 — no seeded vulns
   vue/                       # Vue 3 + Vite, port 3011 — no seeded vulns
@@ -70,6 +81,37 @@ When a new rule is added to js-recon-rules:
 3. Confirm the new rule ID fires: run js-recon run against the app locally and check `analyze.json`.
 4. Add the rule ID to `EXPECTED_RULES` in `js-recon/scripts/smoke-test.js`.
 5. Update the README table in `next_js/vuln-all-rules/README.md`.
+
+## CVE exploitation labs (CI smoke-test targets)
+
+`next_js/cve-*`, `vite/cve-*`, `nuxt/cve-*`, and `angular/cve-*` each seed exactly one framework
+CVE, pinned to a version inside its documented vulnerable range, used by `js-recon`'s `exploit`
+module and the `exploit-smoke-test` GitHub Actions workflow (defined in `js-recon`, not here).
+Each app's own README documents the exact bypass and a manual `curl`/`js-recon exploit` command.
+
+Ports 3020–3027 are reserved for these apps (one per CVE, fixed and hardcoded into both the app's
+own start script and the smoke-test workflow's wait/URL steps — same convention as `detection/`'s
+3010–3016 range). `next_js/cve-2026-64645` additionally runs an internal-only companion service on
+`127.0.0.1:5999` (via `start.sh`), reachable only through the app's own SSRF-vulnerable rewrite.
+
+Two of these apps are RCE-class (`nuxt/cve-2026-71320`, `next_js/cve-2025-55182`) — their exploit
+proof actually executes a command server-side. Treat containers running them as fully compromised
+the moment they're up; never reuse the same container/host for anything else.
+
+### Adding a new CVE lab
+
+1. New directory under the matching framework's top-level dir (`next_js/`, `vite/`, `nuxt/`,
+   `angular/`), named after the CVE ID (`cve-<year>-<number>`).
+2. App pinned to the exact vulnerable version from the CVE's research writeup.
+3. `Dockerfile` following the pattern of an existing lab in the same framework — dev-server-only
+   CVEs (Vite `fs.deny`/WS bypasses) run `npm run dev` in the container, not a production build.
+4. `README.md` documenting the bug and a manual repro command, matching the style of the existing
+   CVE lab READMEs.
+5. New port in the 3020+ range, updated in `README.md`'s docker run commands and this file.
+6. Add the new top-level framework dir (if new) to `.github/workflows/publish.yaml`'s `for top in`
+   loop, or it silently won't get a published Docker image.
+7. Wire the corresponding fixture into `js-recon`'s `exploit-smoke-test.yaml` and
+   `scripts/exploit-smoke-test.js`.
 
 ## Other labs
 
