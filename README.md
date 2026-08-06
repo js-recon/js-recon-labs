@@ -49,6 +49,58 @@ docker run --rm -p 3000:3000 ghcr.io/js-recon/js-recon-labs:dom-xss-postmessage-
 docker run --rm -p 3001:3001 ghcr.io/js-recon/js-recon-labs:vuln-all-rules
 ```
 
+## CVE exploitation labs
+
+Apps seeding specific framework CVEs, used to test `js-recon`'s `exploit` module. _(CI smoke-test targets)_
+
+- [CVE-2025-29927 — Next.js middleware bypass](./next_js/cve-2025-29927)
+
+```
+docker run --rm -p 3020:3020 ghcr.io/js-recon/js-recon-labs:cve-2025-29927
+```
+
+- [CVE-2026-64645 — Next.js rewrites() SSRF](./next_js/cve-2026-64645)
+
+```
+docker run --rm -p 3021:3021 -p 5999:5999 ghcr.io/js-recon/js-recon-labs:cve-2026-64645
+```
+
+- [CVE-2025-55182 — React Flight deserializer RCE ("React2Shell")](./next_js/cve-2025-55182)
+
+```
+docker run --rm -p 3027:3027 ghcr.io/js-recon/js-recon-labs:cve-2025-55182
+```
+
+- [CVE-2025-30208 — Vite server.fs.deny bypass](./vite/cve-2025-30208)
+
+```
+docker run --rm -p 3022:3022 ghcr.io/js-recon/js-recon-labs:cve-2025-30208
+```
+
+- [CVE-2026-39363 — Vite WebSocket fetchModule bypass](./vite/cve-2026-39363)
+
+```
+docker run --rm -p 3023:3023 ghcr.io/js-recon/js-recon-labs:cve-2026-39363
+```
+
+- [CVE-2026-71320 — Nuxt Server Island RCE](./nuxt/cve-2026-71320)
+
+```
+docker run --rm -p 3024:3024 ghcr.io/js-recon/js-recon-labs:cve-2026-71320
+```
+
+- [CVE-2026-71315 / CVE-2026-53721 — Nuxt route-rule casing bypass](./nuxt/cve-2026-71315)
+
+```
+docker run --rm -p 3025:3025 ghcr.io/js-recon/js-recon-labs:cve-2026-71315
+```
+
+- [CVE-2026-68945 — Angular HttpTransferCache key collision](./angular/cve-2026-68945)
+
+```
+docker run --rm -p 3026:3026 ghcr.io/js-recon/js-recon-labs:cve-2026-68945
+```
+
 ## Framework detection labs
 
 The apps under [`detection/`](./detection) are **minimal fixtures WITHOUT seeded vulnerabilities**, unlike the `next_js/` labs above. Each one exists purely to be recognized by name by js-recon's framework/bundler tech-detection logic. They are the CI fixtures for js-recon's `framework-detection-smoke-test` GitHub Actions workflow (defined in the [js-recon](https://github.com/js-recon/js-recon) repo), which builds and starts all of them on fixed ports and asserts that js-recon's `fingerprint` command reports the correct framework for each.
