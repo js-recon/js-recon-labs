@@ -1,18 +1,18 @@
 {
-  "name": "detection-react-vite",
-  "version": "1.0.0",
-  "private": true,
-  "scripts": {
-    "dev": "vite --port 3015",
-    "build": "vite build",
-    "start": "vite preview --port 3015 --host 0.0.0.0"
-  },
-  "dependencies": {
-    "react": "19.1.0",
-    "react-dom": "19.1.0"
-  },
-  "devDependencies": {
-    "@vitejs/plugin-react": "^4.3.4",
-    "vite": "^5.4.0"
-  }
+    "name": "detection-react-vite",
+    "version": "1.0.0",
+    "private": true,
+    "scripts": {
+        "dev": "vite --port 3015",
+        "build": "vite build",
+        "start": "vite preview --port 3015 --host 0.0.0.0"
+    },
+    "dependencies": {
+        "react": "19.1.0",
+        "react-dom": "19.1.0"
+    },
+    "devDependencies": {
+        "@vitejs/plugin-react": "^4.3.4",
+        "vite": "^5.4.0"
+    }
 }
