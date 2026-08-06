@@ -1,0 +1,23 @@
+{
+  "name": "detection-react-webpack",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "webpack --mode=production",
+    "start": "serve -s dist -l tcp://0.0.0.0:3016"
+  },
+  "dependencies": {
+    "react": "19.1.0",
+    "react-dom": "19.1.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.25.0",
+    "@babel/preset-env": "^7.25.0",
+    "@babel/preset-react": "^7.24.7",
+    "babel-loader": "^9.2.1",
+    "html-webpack-plugin": "^5.6.0",
+    "serve": "^14.2.4",
+    "webpack": "^5.96.1",
+    "webpack-cli": "^5.1.4"
+  }
+}

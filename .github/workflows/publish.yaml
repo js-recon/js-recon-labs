@@ -33,24 +33,29 @@ jobs:
 
       - name: Build and push Docker images
         run: |
-          if [ ! -d "next_js" ]; then
-            echo "'next_js' directory not found."
-            exit 1
-          fi
-          cd next_js
-          for dir in */ ; do
-            if [ -f "$dir/Dockerfile" ]; then
-              TAG=$(basename "$dir" | tr '[:upper:]' '[:lower:]')
-              GHCR_IMAGE="ghcr.io/js-recon/js-recon-labs:$TAG"
-
-              echo "Building and pushing to GHCR: $GHCR_IMAGE"
-
-              docker buildx build \
-                --platform linux/amd64,linux/arm64 \
-                -t "$GHCR_IMAGE" \
-                --push \
-                "$dir"
-            else
-              echo "No Dockerfile found in $dir, skipping."
+          for top in next_js detection; do
+            if [ ! -d "$top" ]; then
+              echo "'$top' directory not found."
+              exit 1
             fi
+
+            (
+              cd "$top"
+              for dir in */ ; do
+                if [ -f "$dir/Dockerfile" ]; then
+                  TAG=$(basename "$dir" | tr '[:upper:]' '[:lower:]')
+                  GHCR_IMAGE="ghcr.io/js-recon/js-recon-labs:$TAG"
+
+                  echo "Building and pushing to GHCR: $GHCR_IMAGE"
+
+                  docker buildx build \
+                    --platform linux/amd64,linux/arm64 \
+                    -t "$GHCR_IMAGE" \
+                    --push \
+                    "$dir"
+                else
+                  echo "No Dockerfile found in $dir, skipping."
+                fi
+              done
+            )
           done

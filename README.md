@@ -49,6 +49,52 @@ docker run --rm -p 3000:3000 ghcr.io/js-recon/js-recon-labs:dom-xss-postmessage-
 docker run --rm -p 3001:3001 ghcr.io/js-recon/js-recon-labs:vuln-all-rules
 ```
 
+## Framework detection labs
+
+The apps under [`detection/`](./detection) are **minimal fixtures WITHOUT seeded vulnerabilities**, unlike the `next_js/` labs above. Each one exists purely to be recognized by name by js-recon's framework/bundler tech-detection logic. They are the CI fixtures for js-recon's `framework-detection-smoke-test` GitHub Actions workflow (defined in the [js-recon](https://github.com/js-recon/js-recon) repo), which builds and starts all of them on fixed ports and asserts that js-recon's `fingerprint` command reports the correct framework for each.
+
+- [Next.js](./detection/next_js) — Next.js (own bundler), port 3010
+
+```
+docker run --rm -p 3010:3010 ghcr.io/js-recon/js-recon-labs:next_js
+```
+
+- [Vue 3](./detection/vue) — Vue 3 + Vite, port 3011
+
+```
+docker run --rm -p 3011:3011 ghcr.io/js-recon/js-recon-labs:vue
+```
+
+- [Nuxt 3](./detection/nuxt) — Nuxt 3 + Nitro, port 3012
+
+```
+docker run --rm -p 3012:3012 ghcr.io/js-recon/js-recon-labs:nuxt
+```
+
+- [SvelteKit](./detection/svelte) — SvelteKit + Vite (adapter-node), port 3013
+
+```
+docker run --rm -p 3013:3013 ghcr.io/js-recon/js-recon-labs:svelte
+```
+
+- [Angular](./detection/angular) — Angular CLI/esbuild, port 3014
+
+```
+docker run --rm -p 3014:3014 ghcr.io/js-recon/js-recon-labs:angular
+```
+
+- [React (Vite)](./detection/react_vite) — React + Vite, port 3015
+
+```
+docker run --rm -p 3015:3015 ghcr.io/js-recon/js-recon-labs:react_vite
+```
+
+- [React (webpack)](./detection/react_webpack) — React + webpack, port 3016
+
+```
+docker run --rm -p 3016:3016 ghcr.io/js-recon/js-recon-labs:react_webpack
+```
+
 ## Walkthroughs
 
 Video guides on setting up and solving these labs can be found on [JS Recon Site](https://js-recon.io/labs).

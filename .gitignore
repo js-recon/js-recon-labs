@@ -89,7 +89,15 @@ out
 
 # Nuxt.js build / generate output
 .nuxt
+.output
 dist
+
+# SvelteKit build output
+.svelte-kit
+build
+
+# Angular build cache
+.angular
 
 # Gatsby files
 .cache/
